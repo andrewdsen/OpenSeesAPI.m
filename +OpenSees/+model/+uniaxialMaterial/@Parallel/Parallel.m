@@ -9,11 +9,11 @@
 % MATLAB syntax:
 % 
 
-classdef Parallel < OpenSees
+classdef Parallel < OpenSees.model.uniaxialMaterial
     
     properties
         
-        tag = [];   % integer tag identifying material
+%         tag = [];   % integer tag identifying material
         mat = [];   % array of previously defined materials
         
     end

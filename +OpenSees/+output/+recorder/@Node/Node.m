@@ -90,7 +90,7 @@ classdef Node < OpenSees
                 obj.deltaT = p.Results.deltaT;
                 
                 % command line add
-                obj.cmdLine = [obj.cmdLine ' -dT ' num2str(obj.deltaT)];
+                obj.cmdLine = [obj.cmdLine ' -dT ' num2str(obj.deltaT, '%0.10f')];
                 
             end
             

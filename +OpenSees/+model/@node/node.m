@@ -13,6 +13,7 @@ classdef node < OpenSees
         x   % x-coordinate
         y   % y-coordinate (if ndm >= 2)
         z   % z-coordinate (if ndm == 3)
+        flag = [];
         
     end
     

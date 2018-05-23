@@ -35,7 +35,7 @@ classdef Steel02 < OpenSees.model.uniaxialMaterial
     
     methods
         
-        function obj = Steel02(tag,Fy,E0,b,R0,CR1,CR2,a1,a2,a3,a4,sigInit)
+        function obj = Steel02(tag, Fy, E0, b, R0, CR1, CR2, a1, a2, a3, a4, sigInit)
             
             % store variables
             obj.tag = tag;

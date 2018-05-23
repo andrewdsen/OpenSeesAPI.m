@@ -2,20 +2,20 @@
 % the same location. The nodes are connected by multiple UniaxialMaterial objects to represent the 
 % force-deformation relationship for the element.
 %
-% Ref: http://opensees.berkeley.edu/wiki/index.php/ZeroLength_Element
+% Ref: http://opensees.berkeley.edu/wiki/index.php/Two_Node_Link_Element
 %
 % tcl syntax:
-% element zeroLength $eleTag $iNode $jNode -mat $matTag1 $matTag2 ... -dir $dir1 $dir2 ...
+% element twoNodeLink $eleTag $iNode $jNode -mat $matTag1 $matTag2 ... -dir $dir1 $dir2 ...
 % <-doRayleigh $rFlag> <-orient $x1 $x2 $x3 $yp1 $yp2 $yp3>
 %
 % MATLAB syntax:
-% zeroLength(tag,iNode,jNode,mat,matDir,<x,yp>,<rFlag>)
+% twoNodeLink(tag,iNode,jNode,mat,matDir,<x,yp>,<rFlag>)
 
-classdef zeroLength < OpenSees.model.element & matlab.mixin.Copyable
+classdef twoNodeLink < OpenSees.model.element & matlab.mixin.Copyable
    
     properties
         
-        format = ' %0.5f'; % string format
+        format = ' %0.6f'; % string format
         
         iNode       %  
         jNode       % 
@@ -29,7 +29,7 @@ classdef zeroLength < OpenSees.model.element & matlab.mixin.Copyable
     
     methods
         
-        function obj = zeroLength(tag,iNode,jNode,mat,matDir,varargin)
+        function obj = twoNodeLink(tag,iNode,jNode,mat,matDir,varargin)
            
             p = inputParser;
             addRequired(p,'tag');
@@ -50,7 +50,7 @@ classdef zeroLength < OpenSees.model.element & matlab.mixin.Copyable
             obj.matDir = matDir;
             
             % command line open
-            obj.cmdLine = ['element zeroLength ' ...
+            obj.cmdLine = ['element twoNodeLink ' ...
                            num2str(obj.tag) ' ' ...
                            num2str(obj.iNode.tag) ' ' ...
                            num2str(obj.jNode.tag) ' ' ...
@@ -84,7 +84,7 @@ classdef zeroLength < OpenSees.model.element & matlab.mixin.Copyable
         
         function rewrite(obj)
            
-            obj.cmdLine = ['element zeroLength ' ...
+            obj.cmdLine = ['element twoNodeLink ' ...
                            num2str(obj.tag) ' ' ...
                            num2str(obj.iNode.tag) ' ' ...
                            num2str(obj.jNode.tag) ' ' ...
