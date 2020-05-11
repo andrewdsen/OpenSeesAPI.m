@@ -13,7 +13,7 @@
 % MATLAB syntax:
 % 
 
-classdef forceBeamColumn < OpenSees.model.element
+classdef forceBeamColumnWithHinges < OpenSees.model.element
     
     properties
    
@@ -23,15 +23,18 @@ classdef forceBeamColumn < OpenSees.model.element
         iNode = [];             % start node object
         jNode = [];             % end node object
         transf = [];            % geometric transformation object
-        sec = [];               % section object
+        secI = [];              % section object at end i
+        secJ = [];              % section object at end j
 
         % optional
-        intType = 'Lobatto';    % integration type, supported types:
-                                % | Lobatto             Gauss-Lobatto (default)
-                                % | Legendre            Gauss-Legendre
-                                % | Radau               Gauss-Radau
-                                % | NewtonCotes         Newton-Cotes
-        np = 5;                 % number of integration points        
+        intType = 'HingeEndpoint';    % integration type, supported types:
+                                % | HingeRadau
+                                % | HingeRadauTwo
+                                % | HingeMidpoint
+                                % | HingeEndpoint (default)
+        LpI;                    % plastic hinge length at end i
+        LpJ;                    % plastic hinge length at end j
+        secInterior = [];       % interior section object
         massDens = [];          % element mass density (per unit length), from which a lumped-mass 
                                 % matrix is formed
         maxIters = [];          % maximum number of iterations to undertake to satisfy element
@@ -42,36 +45,36 @@ classdef forceBeamColumn < OpenSees.model.element
     
     methods
    
-        function obj = forceBeamColumn(tag,iNode,jNode,transf,sec,varargin)
+        function obj = forceBeamColumnWithHinges(tag, iNode, jNode, transf, intType, secI, secJ, secInterior, LpI, LpJ, varargin)
            
             p = inputParser;
-            addRequired(p,'tag');
-            addRequired(p,'iNode');
-            addRequired(p,'jNode');
-            addRequired(p,'transf');
-            addRequired(p,'sec');
-            addOptional(p,'intType',obj.intType);
-            addOptional(p,'np',obj.np);
-            addOptional(p,'massDens',obj.massDens);
-            addOptional(p,'maxIters',obj.maxIters);
-            addOptional(p,'tol',obj.tol);
-            parse(p,tag,iNode,jNode,transf,sec,varargin{:});
+            addRequired(p, 'tag');
+            addRequired(p, 'iNode');
+            addRequired(p, 'jNode');
+            addRequired(p, 'transf');
+            addRequired(p, 'intType');
+            addRequired(p, 'secI');
+            addRequired(p, 'secJ');
+            addRequired(p, 'secInterior');
+            addRequired(p, 'LpI');
+            addRequired(p, 'LpJ');
+            addOptional(p, 'massDens',obj.massDens);
+            addOptional(p, 'maxIters',obj.maxIters);
+            addOptional(p, 'tol',obj.tol);
+            parse(p, tag, iNode, jNode, transf, intType, secI, secJ, secInterior, LpI, LpJ, varargin{:});
             
             % store variables
             obj.tag = tag;
             obj.iNode = iNode;
             obj.jNode = jNode;
             obj.transf = transf;
-            obj.sec = sec;
-            
-            if any(ismember(p.UsingDefaults,'intType')) == 0
-                obj.intType = p.Results.intType;
-            end
-            if any(ismember(p.UsingDefaults,'np')) == 0
-                obj.np = p.Results.np;
-            end
-
-            
+            obj.intType = intType;
+            obj.secI = secI;
+            obj.secJ = secJ;
+            obj.secInterior = secInterior;
+            obj.LpI = LpI;
+            obj.LpJ = LpJ;
+                        
             % command line open
             obj.cmdLine = ['element forceBeamColumn ' ...
                            num2str(obj.tag) ' ' ...
@@ -79,8 +82,11 @@ classdef forceBeamColumn < OpenSees.model.element
                            num2str(obj.jNode.tag) ' ' ...
                            num2str(obj.transf.tag) ' ' ...
                            '"' obj.intType ' ' ...
-                           num2str(obj.sec.tag) ' ' ...
-                           num2str(obj.np) '"'];
+                           num2str(obj.secI.tag) ' ' ...
+                           num2str(obj.LpI, obj.format) ' ' ...
+                           num2str(obj.secJ.tag) ' ' ...
+                           num2str(obj.LpJ, obj.format) ' ' ...
+                           num2str(obj.secInterior.tag) '"'];
 
             if any(ismember(p.UsingDefaults,'massDens')) == 0
                 

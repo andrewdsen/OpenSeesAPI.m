@@ -23,7 +23,7 @@ classdef Concrete01 < OpenSees.model.uniaxialMaterial
         epsU = [];      % concrete strain at crushing
        
         % output
-        G = [];         % shear modulus
+%         G = [];         % shear modulus
         
     end
     
@@ -46,8 +46,8 @@ classdef Concrete01 < OpenSees.model.uniaxialMaterial
                            num2str(obj.fpcu,obj.format) ' ' ...
                            num2str(obj.epsU,obj.format)];
             
-            E = 2*obj.fpc/obj.epsc0;
-            obj.G = E/(2*(1 + 0.2));
+%             E = 2*obj.fpc/obj.epsc0;
+%             obj.G = E/(2*(1 + 0.2));
                        
         end
         

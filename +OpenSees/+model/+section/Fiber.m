@@ -28,7 +28,7 @@ classdef Fiber < OpenSees
     
     methods
         
-        function obj = Fiber(tag,fibers,GJ)
+        function obj = Fiber(tag, fibers, GJ)
             
             if nargin >= 2
             

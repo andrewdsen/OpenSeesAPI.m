@@ -23,7 +23,10 @@ classdef database < matlab.mixin.Copyable
         damp_node           % array of nodes for mass-based ralyeigh damping
         damp_ele            % array of elements for stiffness-based rayleigh damping
         nodeTagList         % array of node tags used (for ensuring unique numbering)
+        matTagList          % array of material tags used (for ensuring unique numbering)
+        secTagList          % array of section tags used (for ensuring unique numbering)
         eleTagList          % array of element tags used (for ensuring unique numbering)
+        geomTransfTagList   % array of geometric trasnformation tags used (for ensuring unique numbering)
         x_grid
         y_grid
         z_grid
@@ -33,7 +36,11 @@ classdef database < matlab.mixin.Copyable
     methods
         
         % constructor
-        function obj = database(title,author,fileName)
+        function obj = database(title, author, fileName)
+            
+            if nargin == 0
+                return;
+            end
             
             % store variables
             obj.title = title;
@@ -64,10 +71,12 @@ classdef database < matlab.mixin.Copyable
         
         function obj = addMaterial(obj,Material)
             obj.material = vertcat(obj.material,Material);
+            obj.matTagList = vertcat(obj.matTagList,Material.tag);
         end
         
         function obj = addSection(obj,Section)
             obj.section = vertcat(obj.section,Section);
+            obj.secTagList = vertcat(obj.secTagList,Section.tag);
         end
         
         function obj = addGeomTransf(obj,GeomTransf)
@@ -208,14 +217,41 @@ classdef database < matlab.mixin.Copyable
             
         end
         
-         function tag = getEleTag(obj,startTag)
+        function tag = getMatTag(obj,startTag)
+           
+            while any(obj.matTagList == startTag)
+                startTag = startTag+1;
+            end
+            tag = startTag;
+            
+        end
+        
+        function tag = getSecTag(obj,startTag)
+           
+            while any(obj.secTagList == startTag)
+                startTag = startTag+1;
+            end
+            tag = startTag;
+            
+        end
+        
+        function tag = getEleTag(obj,startTag)
            
             while any(obj.eleTagList == startTag)
                 startTag = startTag+1;
             end
             tag = startTag;
             
-        end       
+        end
+        function tag = getgeomTransfTag(obj,startTag)
+           
+            while any(obj.geomTransfTagList == startTag)
+                startTag = startTag+1;
+            end
+            tag = startTag;
+            
+        end
+        
     end
     
 end

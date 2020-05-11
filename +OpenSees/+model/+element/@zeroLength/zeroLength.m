@@ -29,7 +29,7 @@ classdef zeroLength < OpenSees.model.element & matlab.mixin.Copyable
     
     methods
         
-        function obj = zeroLength(tag,iNode,jNode,mat,matDir,varargin)
+        function obj = zeroLength(tag, iNode, jNode, mat, matDir, varargin)
            
             p = inputParser;
             addRequired(p,'tag');

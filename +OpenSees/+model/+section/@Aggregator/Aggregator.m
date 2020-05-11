@@ -1,8 +1,8 @@
-classdef Aggregator < OpenSees
+classdef Aggregator < OpenSees.model.section
     
     properties
         
-        tag = [];   % unique section tag
+%         tag = [];   % unique section tag
         mat = [];   % array of OpenSees materials
         dof = {};   % cell array of dofs corresponding to materials
                     % acceptable values:
@@ -24,7 +24,6 @@ classdef Aggregator < OpenSees
             obj.tag = tag;
             obj.mat = mat;
             obj.dof = dof;
-            obj.sec = sec;
             
             if length(obj.mat) ~= length(obj.dof)
                 error('Number of materials and number of dofs must match!');
@@ -39,7 +38,10 @@ classdef Aggregator < OpenSees
                 obj.cmdLine = [obj.cmdLine ' ' num2str(obj.mat(ii).tag) ' ' obj.dof{ii}];
             end
             
-            obj.cmdLine = [obj.cmdLine ' -section ' num2str(obj.sec.tag)];
+            if nargin == 4
+                obj.sec = sec;
+                obj.cmdLine = [obj.cmdLine ' -section ' num2str(obj.sec.tag)];
+            end
             
         end
         

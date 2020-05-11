@@ -26,7 +26,7 @@ classdef rect < OpenSees
     
     methods
         
-        function obj = rect(mat,nfy,nfz,iCoords,jCoords)
+        function obj = rect(mat, nfy, nfz, iCoords, jCoords)
             
             % store variables
             obj.mat = mat;

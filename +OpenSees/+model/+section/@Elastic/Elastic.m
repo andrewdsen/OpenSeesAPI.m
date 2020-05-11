@@ -10,14 +10,14 @@
 % MATLAB syntax:
 % 
 
-classdef Elastic < OpenSees
+classdef Elastic < OpenSees.model.section
     
     properties
         
         format = '% 0.7f';
         
         % required
-        tag = [];   % section tag
+%         tag = [];   % section tag
         E = [];     % elastic modulus
         A = [];     % cross-sectional area
         Iz = [];    % second moment of area about local z-axis

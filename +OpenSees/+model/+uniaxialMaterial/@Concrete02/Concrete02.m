@@ -8,7 +8,7 @@
 % MATLAB syntax:
 % Concrete02(tag,fpc,epsc0,fpcu,epsU,lambda,ft,Ets)
 
-classdef Concrete02 < OpenSees.model.uniaxialMaterial
+classdef Concrete02 < OpenSees.model.uniaxialMaterial & matlab.mixin.Copyable
     
     properties
         
@@ -50,7 +50,21 @@ classdef Concrete02 < OpenSees.model.uniaxialMaterial
                            num2str(obj.Ets,obj.format)];
             
         end
+    
+        function rewrite(obj)
+
+            % command line open
+            obj.cmdLine = ['uniaxialMaterial Concrete02 ' ...
+                           num2str(obj.tag) ' ' ...
+                           num2str(obj.fpc,obj.format) ' ' ...
+                           num2str(obj.epsc0,obj.format) ' ' ...
+                           num2str(obj.fpcu,obj.format) ' ' ...
+                           num2str(obj.epsU,obj.format) ' ' ...
+                           num2str(obj.lambda,obj.format) ' ' ...
+                           num2str(obj.ft,obj.format) ' ' ...
+                           num2str(obj.Ets,obj.format)];    
+        end
         
     end
-    
+        
 end

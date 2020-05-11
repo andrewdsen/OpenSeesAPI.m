@@ -19,7 +19,7 @@ classdef node < OpenSees
     
     methods
         
-        function obj = node(tag,x,y,z)
+        function obj = node(tag, x, y, z)
 
             format = '%0.5f '; % string format
             

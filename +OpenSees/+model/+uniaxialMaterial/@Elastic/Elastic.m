@@ -12,7 +12,7 @@ classdef Elastic < OpenSees.model.uniaxialMaterial
     
     properties
     
-        format = '%0.16f';
+        format = '%0.8f';
         
         % required
         E = [];     % tangent modulus

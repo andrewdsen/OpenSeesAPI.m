@@ -16,7 +16,7 @@ classdef elasticBeamColumn < OpenSees.model.element
     
     properties
         
-        format = '% 0.5f'; % string format
+        format = '% 0.3f'; % string format
         
         % if ndm >= 2
         iNode      % start node object

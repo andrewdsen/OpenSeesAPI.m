@@ -36,6 +36,8 @@ classdef exec
                 fprintf(batch,['OpenSeesSP_new ' db.fileName]);
             elseif strcmp(obj.OSver,'MP')
                 fprintf(batch,['OpenSeesMP ' db.fileName]);
+            elseif strcmp(obj.OSver, 'SC41')
+                fprintf(batch, ['OpenSees_SC41 ' db.fileName]);
             end 
             fclose(batch);
             analysis_tic = tic;
